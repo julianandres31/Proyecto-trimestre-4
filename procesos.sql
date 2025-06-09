@@ -1,11 +1,9 @@
-/*Datos cliente proce*/
-
 USE `entertaiment`;
 DROP procedure IF EXISTS `datos_cliente`;
 
 DELIMITER $$
 USE `entertaiment`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_cliente`(
+CREATE PROCEDURE `datos_cliente`(
     IN c_Nombre VARCHAR(20),
     IN c_Apellido VARCHAR(30), 
     IN c_Nacionalidad VARCHAR(15), 
@@ -30,6 +28,152 @@ BEGIN
             c_Correo, c_Telefono, c_Nacimiento, c_CodiCiudad, SHA2(c_Password, 256)
         );
     END IF;
+END$$
+
+DELIMITER ;
+
+
+
+
+USE `entertaiment`;
+DROP procedure IF EXISTS `insertar_todos_datos`;
+
+DELIMITER $$
+USE `entertaiment`$$
+CREATE PROCEDURE insertar_todos_datos (
+    -- Departamento
+    IN p_Codigo_Departamento TINYINT(3),
+    IN p_Nombre_Departamento VARCHAR(27),
+    
+    -- Ciudad
+    IN p_CodiCiudad TINYINT(3),
+    IN p_Nombre_Ciudad VARCHAR(27),
+    
+    -- Genero
+    IN p_ID_Genero TINYINT(1),
+    IN p_NomGenero VARCHAR(10),
+    
+    -- Director
+    IN p_Nombre_Director VARCHAR(25),
+    IN p_Apellido_Director VARCHAR(25),
+    IN p_Foto_Director INT(10),
+    IN p_Anio_Nacimiento INT(10),
+    
+    -- Actor
+    IN p_Nombre_Actor VARCHAR(25),
+    IN p_Apellido_Actor VARCHAR(25),
+    IN p_Foto_Actor INT(10),
+    
+    -- Cliente
+    IN p_Nombre_Cliente VARCHAR(20),
+    IN p_Apellido_Cliente VARCHAR(30),
+    IN p_Nacionalidad VARCHAR(15),
+    IN p_Correo VARCHAR(40),
+    IN p_Telefono VARCHAR(14),
+    IN p_Nacimiento DATE,
+    IN p_Password VARCHAR(20),
+    
+    -- Contenido
+    IN p_Titulo VARCHAR(255),
+    IN p_Fecha_Lanzamiento DATE,
+    IN p_Descripcion VARCHAR(300),
+    IN p_Duracion TIME,
+    IN p_Clasificacion_Edad VARCHAR(2),
+    IN p_Idioma_Original VARCHAR(50),
+    IN p_Trailer_URL VARCHAR(255),
+    IN p_Pais_Produccion VARCHAR(3),
+    IN p_Puntuacion_Promedio DECIMAL(3,2),
+    IN p_Enlace_Video VARCHAR(255),
+    
+    -- Actor/Contenido
+    IN p_Tipo_Actor INT(10),
+    IN p_Personaje INT(10),
+    
+    -- Vistas
+    IN p_Termino BIT,
+    IN p_Tiempo_Visto TIME(6),
+    
+    -- Compra
+    IN p_FechaCompra DATE,
+    
+    -- Membresía
+    IN p_NomMembresia VARCHAR(10),
+    IN p_Precio INT(10),
+    IN p_Duracion_Membresia DATE,
+    IN p_Num_Pantallas INT(1),
+    IN p_Num_Cuentas INT(1),
+    IN p_Num_CorreosAsociados INT(1)
+)
+BEGIN
+    -- Departamento
+    INSERT INTO Departamento VALUES (p_Codigo_Departamento, p_Nombre_Departamento);
+
+    -- Ciudad
+    INSERT INTO Ciudad VALUES (p_CodiCiudad, p_Nombre_Ciudad, p_Codigo_Departamento);
+
+    -- Genero
+    INSERT INTO Genero VALUES (p_ID_Genero, p_NomGenero);
+
+    -- Director
+    INSERT INTO Director (Nombre_Director, Apellido_Director, Foto, Año_Nacimiento)
+    VALUES (p_Nombre_Director, p_Apellido_Director, p_Foto_Director, p_Anio_Nacimiento);
+
+    -- Obtener ID director
+    SET @id_director := LAST_INSERT_ID();
+
+    -- Actor
+    INSERT INTO Actor (Nombre_Actor, Apellido_Actor, Foto)
+    VALUES (p_Nombre_Actor, p_Apellido_Actor, p_Foto_Actor);
+    
+    SET @id_actor := LAST_INSERT_ID();
+
+    -- Cliente
+    INSERT INTO Clientes (
+        Nombre, Apellido, Nacionalidad, ID_Genero,
+        Correo, Telefono, Nacimiento, CodiCiudad, Password
+    ) VALUES (
+        p_Nombre_Cliente, p_Apellido_Cliente, p_Nacionalidad, p_ID_Genero,
+        p_Correo, p_Telefono, p_Nacimiento, p_CodiCiudad, SHA2(p_Password, 256)
+    );
+
+    SET @id_cliente := LAST_INSERT_ID();
+
+    -- Contenido
+    INSERT INTO Contenido_AudioVisual (
+        Titulo, Fecha_Lanzamiento, Descripcion, Duracion, Clasificacion_Edad,
+        Idioma_Original, Trailer_URL, Pais_Produccion, Puntuacion_Promedio,
+        Enlace_Video, ID_Director
+    ) VALUES (
+        p_Titulo, p_Fecha_Lanzamiento, p_Descripcion, p_Duracion,
+        p_Clasificacion_Edad, p_Idioma_Original, p_Trailer_URL, p_Pais_Produccion,
+        p_Puntuacion_Promedio, p_Enlace_Video, @id_director
+    );
+
+    SET @id_contenido := LAST_INSERT_ID();
+
+    -- Género-Contenido
+    INSERT INTO Genero_Contenido_AudioVisual VALUES (p_ID_Genero, @id_contenido);
+
+    -- Actor-Contenido
+    INSERT INTO Contenido_AudioVisual_Actor VALUES (@id_contenido, @id_actor, p_Tipo_Actor, p_Personaje);
+
+    -- Vistas
+    INSERT INTO Vistas VALUES (@id_cliente, @id_contenido, p_Termino, p_Tiempo_Visto);
+
+    -- Compras
+    INSERT INTO Compras (Fechacompra, ID_Clientes) VALUES (p_FechaCompra, @id_cliente);
+
+    SET @id_factura := LAST_INSERT_ID();
+
+    -- Membresía
+    INSERT INTO Membresia (
+        NomMembresia, Precio, Duracion, Num_Pantallas,
+        Num_cuentas, Num_CorreosAsociados, ID_Factura
+    ) VALUES (
+        p_NomMembresia, p_Precio, p_Duracion_Membresia,
+        p_Num_Pantallas, p_Num_Cuentas, p_Num_CorreosAsociados, @id_factura
+    );
+
 END$$
 
 DELIMITER ;

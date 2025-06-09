@@ -1,21 +1,32 @@
-/*Genero*/
-insert into genero(id_genero,nomgenero) values 
-	(1,"hombre"),
-	(2,"mujer");
-/*Departamento*/
-insert into departamento(codigo_departamento,nombre_departamento) values 
-	(25,"Cundinamarca"),
-	(27,"Choco");
-/*Ciudad*/
-insert into ciudad(nombre_ciudad,Codigo_departamento) values 
-	("Bogota D.C.",25),
-	("Bogota D.C.",27);
 
-CALL datos_cliente(
-    'Ana', 'Ramírez', 'Colombiana', 2,
-    'ana.ramirez@example.com', '3004567890', '1995-04-12', 1, 'MiClave123'
-);
+SELECT * FROM departamento; /*tiene 1 dato*/
 
-select * from ciudad;
-SELECT * FROM ciudad WHERE CodiCiudad = 2;
-select * from clientes;
+SELECT * FROM actor; /*tiene 1 dato*/
+
+SELECT * FROM Ciudad;  /*tiene 1 dato*/
+
+SELECT * FROM Clientes;  /*tiene 1 dato*/
+
+SELECT * FROM Compras; /* tiene 1 dato*/
+
+SELECT * FROM Contenido_audiovisual; /* tiene 1 dato*/
+
+SELECT * FROM Contenido_audiovisual_actor; /*tiene 1 dato*/
+
+SELECT * FROM director; /*tiene 1 dato*/
+
+SELECT * FROM Genero; /*tiene 1 datos*/
+
+SELECT * FROM genero_contenido_audiovisual; /* tiene 1 dato*/
+
+SELECT * FROM membresia; /* tiene 1 dato*/
+
+SELECT * FROM vistas; /* tiene 1 dato*/
+
+
+
+
+
+
+
+

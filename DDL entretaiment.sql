@@ -1,8 +1,6 @@
 create database entertaiment;
 use entertaiment;
 
-drop database entertaiment;
-
 CREATE TABLE Departamento (
     
     Codigo_Departamento TINYINT(3) PRIMARY KEY,
@@ -10,7 +8,7 @@ CREATE TABLE Departamento (
 );
 
 CREATE TABLE Ciudad (
-    CodiCiudad TINYINT(3) AUTO_INCREMENT PRIMARY KEY,
+    CodiCiudad TINYINT(3) PRIMARY KEY,
     Nombre_Ciudad VARCHAR(27),
     Codigo_Departamento TINYINT(3)
 );
