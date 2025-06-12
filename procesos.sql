@@ -260,22 +260,22 @@ END$$
 DELIMITER ;
 
 
-/*compras*/
+/*Factura*/
 
 
 USE `entertaiment`;
-DROP procedure IF EXISTS `entertaiment`.`Datos_Compras`;
+DROP procedure IF EXISTS `entertaiment`.`Datos_factura`;
 ;
 
 DELIMITER $$
 USE `entertaiment`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `Datos_Compras`(
-    IN p_FechaCompra DATE
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Datos_factura`(
+    IN f_FechaCompra DATE
 
 )
 BEGIN
-    INSERT INTO Compras (Fechacompra, ID_Clientes) 
-    VALUES (p_FechaCompra, @id_cliente);
+    INSERT INTO factura (Fechacompra, ID_Clientes) 
+    VALUES (f_FechaCompra, @id_cliente);
 SET @id_factura := LAST_INSERT_ID();
 END$$
 
@@ -292,18 +292,16 @@ USE `entertaiment`$$
 CREATE PROCEDURE `Datos_Membresia` (
     IN p_NomMembresia VARCHAR(10),
     IN p_Precio INT(10),
-    IN p_Duracion_Membresia DATE,
-    IN p_Num_Pantallas INT(1),
-    IN p_Num_Cuentas INT(1),
-    IN p_Num_CorreosAsociados INT(1)
+    IN p_Duracion DATE,
+    IN p_imagen varchar(255),
+    IN p_descripcion varchar(255)
 )
 BEGIN
     INSERT INTO Membresia (
-        NomMembresia, Precio, Duracion, Num_Pantallas,
-        Num_cuentas, Num_CorreosAsociados, ID_Factura
+        NomMembresia, Precio, Duracion, imagen, descripcion,ID_Factura
     ) VALUES (
-        p_NomMembresia, p_Precio, p_Duracion_Membresia,
-        p_Num_Pantallas, p_Num_Cuentas, p_Num_CorreosAsociados, @id_factura
+        p_NomMembresia, p_Precio, p_Duracion,
+        p_imagen, p_descripcion, @id_factura
     );
 END$$
 
