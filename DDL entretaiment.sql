@@ -1,14 +1,15 @@
 create database entertaiment;
 use entertaiment;
 
+drop database entertaiment;
+
 CREATE TABLE Departamento (
-    
     Codigo_Departamento TINYINT(3) PRIMARY KEY,
     Nombre_Departamento VARCHAR(27)
 );
 
 CREATE TABLE Ciudad (
-    CodiCiudad TINYINT(3) PRIMARY KEY,
+    CodiCiudad TINYINT(3) AUTO_INCREMENT PRIMARY KEY,
     Nombre_Ciudad VARCHAR(27),
     Codigo_Departamento TINYINT(3)
 );
@@ -84,20 +85,21 @@ CREATE TABLE Vistas (
     PRIMARY KEY (ID_Clientes, ID_Contenido)
 );
 
-CREATE TABLE Compras (
+CREATE TABLE Factura (
     ID_Factura INT(10) AUTO_INCREMENT PRIMARY KEY,
+    id_membresia int(10),
     Fechacompra DATE,
     ID_Clientes INT(10)
 );
+
 
 CREATE TABLE Membresia (
     ID_Membresia INT(10) AUTO_INCREMENT PRIMARY KEY,
     NomMembresia VARCHAR(10),
     Precio INT(10),
     Duracion DATE,
-    Num_Pantallas INT(1),
-    Num_cuentas INT(1),
-    Num_CorreosAsociados INT(1),
+    imagen varchar(255),
+    descripcion varchar(255),
 	ID_Factura INT(10)
 );
 
@@ -122,9 +124,9 @@ ALTER TABLE Contenido_AudioVisual_Actor
 ALTER TABLE Vistas
     ADD FOREIGN KEY (ID_Clientes) REFERENCES Clientes(ID_Clientes),
     ADD FOREIGN KEY (ID_Contenido) REFERENCES Contenido_AudioVisual(ID_Contenido);
-
-ALTER TABLE Compras
+    
+ALTER TABLE Factura
     ADD FOREIGN KEY (ID_Clientes) REFERENCES Clientes(ID_Clientes);
 
-ALTER TABLE Membresia
-    ADD FOREIGN KEY (ID_Factura) REFERENCES Compras(ID_Factura);
+    alter table factura 
+		add foreign key (id_membresia) references membresia (id_membresia);
