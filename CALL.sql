@@ -33,3 +33,9 @@ CALL insertar_todos_datos(
     -- Membresía
     'Premium', 30000, '2025-12-06', 4, 1, 1
 );
+
+
+call Datos_Departamento (
+ 2, "medellin"
+);
+
