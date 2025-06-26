@@ -72,20 +72,18 @@ DELIMITER ;
 
 /*genero*/
 
-USE `entertaiment`;
-DROP procedure IF EXISTS `Datos_Genero`;
+DROP PROCEDURE IF EXISTS `Genero_Contenido`;
 
 DELIMITER $$
-USE `entertaiment`$$
-CREATE PROCEDURE `Datos_Genero` (
-	IN p_ID_Genero TINYINT(1),
-    IN p_NomGenero VARCHAR(10)
+CREATE PROCEDURE `Genero_Contenido` (
+    IN p_ID_Genero TINYINT(1)
 )
 BEGIN
-    INSERT INTO Genero VALUES (p_ID_Genero, p_NomGenero);
+    INSERT INTO Genero_Contenido_AudioVisual (ID_Genero, ID_Contenido)
+    VALUES (p_ID_Genero, @id_contenido);
 END$$
-
 DELIMITER ;
+
 
 
 /*Director*/
@@ -136,18 +134,23 @@ DELIMITER ;
 
 
 USE `entertaiment`;
+DROP procedure IF EXISTS `Datos_Cliente`;
+
+USE `entertaiment`;
 DROP procedure IF EXISTS `entertaiment`.`Datos_Cliente`;
 ;
 
 DELIMITER $$
 USE `entertaiment`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `Datos_Cliente`(
+CREATE PROCEDURE `Datos_Cliente`(
     IN p_Nombre_Cliente VARCHAR(20),
     IN p_Apellido_Cliente VARCHAR(30),
     IN p_Nacionalidad VARCHAR(15),
+    IN p_ID_Genero TINYINT(1),
     IN p_Correo VARCHAR(40),
     IN p_Telefono VARCHAR(14),
     IN p_Nacimiento DATE,
+    IN p_CodiCiudad TINYINT(3),
     IN p_Password VARCHAR(20)
 )
 BEGIN
@@ -160,11 +163,12 @@ BEGIN
     );
 
     SET @id_cliente := LAST_INSERT_ID();
-
 END$$
 
 DELIMITER ;
 ;
+
+
 
 /*Contenido*/
 
@@ -221,23 +225,24 @@ DELIMITER ;
 
 /*Actor contenido*/
 
+
 USE `entertaiment`;
-DROP procedure IF EXISTS `Actor_Contenido`;
+DROP procedure IF EXISTS `entertaiment`.`Actor_Contenido`;
+;
 
 DELIMITER $$
 USE `entertaiment`$$
 CREATE PROCEDURE `Actor_Contenido` (
-    IN p_Tipo_Actor INT(10),
-    IN p_Personaje INT(10)
-
+    IN p_Tipo_Actor INT,
+    IN p_Personaje VARCHAR(50)
 )
 BEGIN
-    INSERT INTO Contenido_AudioVisual_Actor
+    INSERT INTO Contenido_AudioVisual_Actor (ID_Contenido, ID_Actor, Tipo_Actor, Personaje)
     VALUES (@id_contenido, @id_actor, p_Tipo_Actor, p_Personaje);
-
 END$$
 
 DELIMITER ;
+;
 
 
 /*Vistas*/

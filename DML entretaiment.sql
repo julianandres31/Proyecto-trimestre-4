@@ -16,6 +16,27 @@ CALL datos_cliente(
 'ana.ramireza@example.com', '3004567890', '1995-04-12', 1, 'MiClave123'
 );
 
+
+select * from actor;
+
 select * from ciudad;
-SELECT * FROM ciudad WHERE CodiCiudad = 2;
+
 select * from clientes;
+
+select * from contenido_audiovisual;
+
+select * from contenido_audiovisual_actor;
+
+select * from departamento;
+
+select * from director;
+
+select * from factura;
+
+select * from genero;
+
+select * from genero_contenido_audiovisual;
+
+select * from membresia;
+
+select * from vistas;
