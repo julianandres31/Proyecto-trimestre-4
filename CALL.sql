@@ -78,10 +78,10 @@ CALL Datos_Contenido('Avengers: Endgame', '2019-04-26', 'Heroes assemble to undo
 
 CALL Datos_Genero_Contenido(1, 1); -- Acción para Inception
 CALL Datos_Genero_Contenido(2, 2); -- Romance para Titanic
-CALL Datos_Genero_Contenido(3, 3); -- Ciencia ficción para Jurassic Park
+CALL Datos_Genero_Contenido(3, 1); -- Ciencia ficción para Jurassic Park
 CALL Datos_Genero_Contenido(4, 1); -- Drama para The Godfather
 CALL Datos_Genero_Contenido(5, 2); -- Crimen para Pulp Fiction
-CALL Datos_Genero_Contenido(1, 3); -- Acción para Avengers
+CALL Datos_Genero_Contenido(6, 1); -- Acción para Avengers
 
 
 
@@ -92,10 +92,11 @@ CALL Datos_Genero_Contenido(1, 3); -- Acción para Avengers
 
 
 
-CALL Datos_Vistas(1, '02:00:00'); -- Cliente ve Inception completo
-CALL Datos_Vistas(0, '01:20:00'); -- Cliente ve parte de Titanic
-CALL Datos_Vistas(1, '03:00:00'); -- Cliente ve Avengers completo
-CALL Datos_Vistas(1, '02:55:00'); -- Cliente ve The Godfather completo
+CALL Datos_Vistas(17, 1, b'1', '01:20:35');
+CALL Datos_Vistas(18, 2, b'0', '00:40:00');
+CALL Datos_Vistas(19, 3, b'1', '02:00:00');
+CALL Datos_Vistas(20, 4, b'0', '00:15:00');
+
 
 
 CALL Datos_factura('2024-06-10');

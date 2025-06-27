@@ -1,7 +1,6 @@
 create database entertaiment;
 use entertaiment;
 
-drop database entertaiment;
 
 CREATE TABLE Departamento (
     Codigo_Departamento TINYINT(3) PRIMARY KEY,
@@ -28,6 +27,7 @@ CREATE TABLE Director (
     Año_Nacimiento INT(10)
 );
 
+
 CREATE TABLE Clientes (
     ID_Clientes INT(10) AUTO_INCREMENT PRIMARY KEY,
     Nombre VARCHAR(20),
@@ -38,7 +38,7 @@ CREATE TABLE Clientes (
     Telefono VARCHAR(14),
     Nacimiento DATE,
     CodiCiudad TINYINT(3),
-    Password VARCHAR(20)
+    Password VARCHAR(64)
 );
 
 CREATE TABLE Contenido_AudioVisual (

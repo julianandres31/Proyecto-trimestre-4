@@ -208,18 +208,26 @@ DELIMITER ;
 
 /*Genero contenido*/
 USE `entertaiment`;
-DROP procedure IF EXISTS `Genero_Contenido`;
+DROP procedure IF EXISTS `Datos_Genero_Contenido`;
+
+USE `entertaiment`;
+DROP procedure IF EXISTS `entertaiment`.`Datos_Genero_Contenido`;
+;
 
 DELIMITER $$
 USE `entertaiment`$$
-CREATE PROCEDURE `Genero_Contenido` (
-
+CREATE PROCEDURE Datos_Genero_Contenido (
+    IN p_id_contenido INT,
+    IN p_id_genero INT
 )
 BEGIN
-    INSERT INTO Genero_Contenido_AudioVisual VALUES (p_ID_Genero, @id_contenido);
+    INSERT INTO Datos_Genero_Contenido (ID_Contenido, ID_Genero)
+    VALUES (p_id_contenido, p_id_genero);
 END$$
 
 DELIMITER ;
+;
+
 
 
 
@@ -248,21 +256,27 @@ DELIMITER ;
 /*Vistas*/
 
 USE `entertaiment`;
-DROP procedure IF EXISTS `Vistas`;
+DROP procedure IF EXISTS `Datos_Vistas`;
+
+USE `entertaiment`;
+DROP procedure IF EXISTS `entertaiment`.`Datos_Vistas`;
+;
 
 DELIMITER $$
 USE `entertaiment`$$
-CREATE PROCEDURE `Vistas` (
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Datos_Vistas`(
+    IN p_ID_Clientes INT,
+    IN p_ID_Contenido INT,
     IN p_Termino BIT,
     IN p_Tiempo_Visto TIME(6)
 )
 BEGIN
-    INSERT INTO Vistas 
-    VALUES (@id_cliente, @id_contenido, p_Termino, p_Tiempo_Visto);
-
+    INSERT INTO Vistas (ID_Clientes, ID_Contenido, Termino, Tiempo_Visto)
+    VALUES (p_ID_Clientes, p_ID_Contenido, p_Termino, p_Tiempo_Visto);
 END$$
 
 DELIMITER ;
+;
 
 
 /*Factura*/

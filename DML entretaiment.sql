@@ -17,6 +17,7 @@ CALL datos_cliente(
 );
 
 
+
 select * from actor;
 
 select * from ciudad;
