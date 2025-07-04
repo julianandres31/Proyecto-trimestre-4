@@ -76,12 +76,12 @@ CALL Datos_Contenido('Avengers: Endgame', '2019-04-26', 'Heroes assemble to undo
 
 
 
-CALL Datos_Genero_Contenido(1, 1); -- Acción para Inception
-CALL Datos_Genero_Contenido(2, 2); -- Romance para Titanic
-CALL Datos_Genero_Contenido(3, 1); -- Ciencia ficción para Jurassic Park
-CALL Datos_Genero_Contenido(4, 1); -- Drama para The Godfather
-CALL Datos_Genero_Contenido(5, 2); -- Crimen para Pulp Fiction
-CALL Datos_Genero_Contenido(6, 1); -- Acción para Avengers
+CALL Datos_Genero_Contenido(1, 1); 
+CALL Datos_Genero_Contenido(2, 2); 
+CALL Datos_Genero_Contenido(3, 1); 
+CALL Datos_Genero_Contenido(4, 1);
+CALL Datos_Genero_Contenido(5, 2);
+CALL Datos_Genero_Contenido(6, 1); 
 
 
 
